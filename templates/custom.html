@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'nav.css' %}">
+
+    <title>Switch button</title>
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #107d71;
+            /* Greenish color */
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #2ecc71;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #107d71;
+            /* Dark green color */
+        }
+
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="date"]::placeholder,
+        textarea::placeholder {
+            color: #107d71;
+            /* Dark green color */
+            opacity: 0.7;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Styles for the toggle button */
+        #btn {
+            left: 0;
+            top: 0;
+            position: absolute;
+            width: 110px;
+            /* Adjust as needed */
+            height: 100%;
+            background: #a7e081;
+            border-radius: 30px;
+            transition: .5s;
+            color: transparent;
+            display: inline-block;
+            /* Change from 'block' to 'inline-block' */
+        }
+
+        .button-box {
+            width: 220px;
+            display: flex;
+            margin: 35px auto;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-direction: row;
+            /* Ensure the buttons are displayed horizontally */
+            position: relative;
+            border-radius: 30px;
+            background: #fff;
+        }
+
+        .toggle-btn {
+            padding: 10px 40px;
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+            outline: none;
+            position: relative;
+            text-align: center;
+        }
+
+        .content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s, opacity 0.5s;
+        }
+
+        #customalert,
+        #emialert {
+            max-height: 1000px;
+            opacity: 1;
+            overflow: auto;
+            /* Added to enable scrolling if content exceeds the height */
+            transition: max-height 0.5s, opacity 0.5s;
+        }
+    </style>
+</head>
+
+<header>
+    <div class="header-main">
+        <div class="container">
+            <a href="#" class="header-logo">
+                <img src='{% static 'assets/logo.png' %}' alt="LOGO" width="80" height="80" />
+
+
+            </a>
+
+            <div class="actions">
+                <div class="header-user-actions">
+                    <button class="action-btn">
+                        <ion-icon name="person-outline" class="person-outlines"></ion-icon>
+                    </button>
+                    <button>
+                        <a class="home" href="/">Home</a>
+                    </button>
+
+                      <a class="divider">|</a>
+                    <button>
+                      <a class="emi-text" href="calculator">Calculator</a>
+                  </button>
+
+                    <a class="divider">|</a>
+                    <button>
+                        <a class="alert" href="{% url 'custom' %}">Custom Alert</a>
+                    </button>
+
+                      <a class="divider">|</a>
+                    <button>
+                        <a class="faq-text" href='faq'>FAQ</a>
+                    </button>
+                    <a class="divider">|</a>
+                    <button>
+                        <a class="login-text" href="{% url 'my_login' %}">Logout</a>
+                    </button>
+                    <a class="divider">|</a>
+                    <button>
+                        <a class="hello-msg" href='account'>Hello, {{request.user}}</a>
+                    </button>
+                    <button class="lang-button">
+                        <ion-icon name="globe-outline" class="globe-oulines"></ion-icon>
+                    </button>
+                    <div class="language-container">
+                        <a class="EN" href="account">Settings</a>
+                        <a class="down-arrow">⌄</a>
+                    </div
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-bottom-navigation">
+        <button class="action-btn" data-mobile-menu-open-btn>
+            <ion-icon name="menu-outline"></ion-icon>
+        </button>
+
+        <button class="action-btn">
+            <ion-icon name="bag-handle-outline"></ion-icon>
+        </button>
+
+        <button class="action-btn">
+            <ion-icon name="home-outline"></ion-icon>
+        </button>
+
+        <button class="action-btn">
+            <ion-icon name="heart-outline"></ion-icon>
+        </button>
+
+        <button class="action-btn" data-mobile-menu-open-btn>
+            <ion-icon name="grid-outline"></ion-icon>
+        </button>
+    </div>
+</header>
+
+<body>
+    <div class="form-box">
+        <div class="button-box">
+            <div id="btn"></div>
+            <button type="button" class="toggle-btn" onclick="window.location.href='customalert'">Custom Alert</button>
+            <button type="button" class="toggle-btn" onclick="window.location.href='emialert'">EMI Alert</button>
+        </div>
+    </div>
+</body>
+
+</html>
